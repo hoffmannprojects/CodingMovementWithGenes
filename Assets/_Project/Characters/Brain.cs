@@ -9,6 +9,7 @@ public class Brain : MonoBehaviour
     #region Properties
     public Dna Dna { get; private set; }
     public float TimeAlive { get; private set; }
+    public float DistanceTravelled { get; private set; }
     #endregion
 
     #region Fields
@@ -16,6 +17,7 @@ public class Brain : MonoBehaviour
 
     private ThirdPersonCharacter thirdPersonCharacter;
     private Vector3 moveDirection;
+    private Vector3 startPosition;
     private bool isJumping;
     private bool isAlive = true;
     #endregion
@@ -33,6 +35,7 @@ public class Brain : MonoBehaviour
         Dna = new Dna(DnaLength, 6);
         thirdPersonCharacter = GetComponent<ThirdPersonCharacter>();
         TimeAlive = 0;
+        DistanceTravelled = 0f;
         isAlive = true;
     }
     #endregion
@@ -40,7 +43,7 @@ public class Brain : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-
+        startPosition = this.transform.position;
     }
 
     private void OnCollisionEnter (Collision collision)
@@ -48,6 +51,7 @@ public class Brain : MonoBehaviour
         if (collision.gameObject.tag == "dead")
         {
             isAlive = false;
+            DistanceTravelled = 0f;
         }
     }
 
@@ -91,6 +95,8 @@ public class Brain : MonoBehaviour
         if (isAlive)
         {
             TimeAlive += Time.deltaTime;
+            DistanceTravelled = Vector3.Magnitude(this.transform.position - startPosition);
+            Debug.Log(DistanceTravelled);
         }
     }
 }

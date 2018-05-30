@@ -82,7 +82,7 @@ public class PopulationManager : MonoBehaviour {
 
     private void BreedNewPopulation()
     {
-        List<GameObject> sortedPopulation = population.OrderBy(g => g.GetComponent<Brain>().TimeAlive).ToList();
+        List<GameObject> sortedPopulation = population.OrderBy(g => g.GetComponent<Brain>().DistanceTravelled).ToList();
         population.Clear();
 
         // Breed second half of sortedPopulation.
